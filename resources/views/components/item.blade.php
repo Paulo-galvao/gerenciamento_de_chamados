@@ -1,0 +1,1 @@
+<div class="flex items-center bg-white border-1 border-gray-400 pl-1 rounded-sm w-60 h-7">{{ $slot }}</div>
