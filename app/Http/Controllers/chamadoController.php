@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Chamado;
 use App\Models\Status;
 
 use Carbon\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class chamadoController extends Controller
@@ -60,18 +62,24 @@ class chamadoController extends Controller
 
     public function create()
     {
-        return view('create');
+        $categories = Category::all();
+        return view('create', ['categories' => $categories]);
     }
 
     public function show($id)
     {
         $chamado = Chamado::find($id);
-        return view('show', ['chamado' => $chamado]);
+        $statuses = Status::all();
+        return view('show', [
+            'chamado' => $chamado,
+            'statuses' => $statuses,
+        ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $categoryId = 0;
+        $categories = Category::all();
 
         request()->validate([
             'title' => ['required'],
@@ -79,12 +87,12 @@ class chamadoController extends Controller
             'category' => ['required', Rule::in(['TI', 'Secretaria', 'RH'])],
         ]);
 
-        if (request('category') === 'TI') {
-            $categoryId = 1;
-        } else if (request('category') === 'Secretaria') {
-            $categoryId = 2;
-        } else if (request('category') === 'RH') {
-            $categoryId = 3;
+        
+
+        foreach ($categories as $category) {
+            if(request('category') === $category->name) {
+                $categoryId = $category->id;
+            }
         }
 
         Chamado::create([
@@ -104,13 +112,13 @@ class chamadoController extends Controller
         $statusId = 0;
         $resolved = '';
         $chamado = Chamado::findOrFail($id);
-
+        
         if (request('status') === 'Pendente') {
             $statusId = 2;
             $resolved = '';
         } else if (request('status') === 'Resolvido') {
             $statusId = 3;
-            $resolved = now();
+            $resolved = Carbon::now();
         }
 
         $chamado->update([

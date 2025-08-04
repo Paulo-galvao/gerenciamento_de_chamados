@@ -1,0 +1,1 @@
+<div class="px-3 py-3 my-3 bg-red-300/70 text-red-900 border-2 rounded-md border-red-500 ">Erro: Não se esqueça de preencher todos os campos</div>

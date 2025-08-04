@@ -8,11 +8,17 @@ class Chamado extends Model
 {
     protected $guarded = [];
 
-    public function category() {
+    protected $casts = [
+        'limit' => 'datetime',
+    ];
+
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function status() {
+    public function status()
+    {
         return $this->belongsTo(Status::class);
     }
 }

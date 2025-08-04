@@ -1,34 +1,48 @@
 <x-layout>
-    create page
-    <form method="POST" action="/store">
+    <form class="text-sm mt-5 " method="POST" action="/store">
         
-        @csrf 
+        @if($errors->any())
+            <x-error/>
+        @endif
+        
+        @csrf
 
-        <label for="title">Título</label>
-        <input type="text" name="title" required>
-        @error('title')
-            <span>Preenchimento obrigatório</span>
-        @enderror
+        <div class="mb-5">
 
-        <label for="description">Descrição</label>
-        <input type="text" name="description" required>
-        @error('description')
-            <span>Preenchimento obrigatório</span>
-        @enderror
+            <x-label for="title">Título</x-label>
+            <input id="title"
+                class="bg-white border-1 border-gray-400 ml-2 pl-1 rounded-sm focus:border-2 focus:border-blue-500 outline-none w-60 h-7"
+                type="text" name="title" 
+                placeholder="título do chamado">
+            
+            
+            <x-label for="category">Categoria</x-label>
+            <select
+                class="bg-white border-1 border-gray-400 ml-2 pl-1 rounded-sm focus:border-2 focus:border-blue-500 outline-none w-60 h-7"
+                name="category" id="category">
+                @foreach ($categories as $category)
+                    <option value={{ $category->name }}>{{ $category->name }}</option>
+                @endforeach
+            </select>
+            
 
-        <label for="category">Categoria</label>
-        <input list="categories" type="" name="category" required>
-        @error('category')
-            <span>Erro em categoria</span>
-        @enderror
+        </div>
 
-        <datalist id="categories">
-            <option value="TI" >
-            <option value="Secretaria" >
-            <option value="RH" >
-        </datalist>
+        <div>
+            <x-label for="description">Descrição</x-label>
+            <textarea
+                class="block bg-white border-1 border-gray-400 rounded-sm focus:border-2 focus:border-blue-500 outline-none h-30 w-156"
+                id="description" 
+                type="text" 
+                name="description" 
+                ></textarea>
+            
+        </div>
 
-        <button type="submit">Abrir Novo Chamado</button>
-
+        <x-button type="submit">Abrir Novo Chamado</x-button>
+           
     </form>
+    <a href="/">
+        <x-cancel-button>Cancelar</x-cancel-button>
+    </a>
 </x-layout>
