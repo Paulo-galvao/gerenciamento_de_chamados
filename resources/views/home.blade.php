@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <table class="bg-white text-sm max-w-full ">
+        <table class="bg-white text-sm max-w-5xl ">
             <tr class="h-10 ">
                 <th>Titulo </th>
                 <th>Categoria</th>

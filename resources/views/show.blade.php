@@ -12,7 +12,7 @@
             </li>
             <li>
                 <div>Categoria: </div>
-                
+
                 <x-item>{{ $chamado->category()->first()->name }}</x-item>
             </li>
             <li>
@@ -23,33 +23,34 @@
         </ul>
 
         <ul class="flex gap-28 mb-5">
-            
+
             <li>
                 <div>Data de Criação:</div>
-                
+
                 <x-item>{{ $chamado->created_at->format('d/m/Y H:i') }}</x-item>
             </li>
             @if ($chamado->resolved === '')
                 <li>
-                    Data de Resolução: 
+                    Data de Resolução:
                     <x-item>Não resolvido</x-item>
                 </li>
             @else
                 <li>
-                    Data de Resolução: 
+                    Data de Resolução:
                     <x-item>{{ \Carbon\Carbon::parse($chamado->data_criacao)->format('d/m/Y H:i') }}</x-item>
                 </li>
             @endif
         </ul>
-        
+
         <div>
             <div>Descrição: </div>
-                <textarea disabled class="mb-5 bg-white border-1 border-gray-400 pl-1 rounded-sm h-20 w-full">{{ $chamado->description }}</textarea>
-            
+            <textarea disabled class="mb-5 bg-white border-1 border-gray-400 pl-1 rounded-sm h-20 w-full">{{ $chamado->description }}</textarea>
+
         </div>
 
         <label for="status">Situação: </label>
-        <select class="flex items-center bg-white border-1 border-gray-400 pl-1 rounded-sm w-60 h-7" name="status" id="status">
+        <select class="flex items-center bg-white border-1 border-gray-400 pl-1 rounded-sm w-60 h-7" name="status"
+            id="status">
             @foreach ($statuses as $status)
                 @if ($status->name !== 'Novo')
                     <option value={{ $status->name }}>{{ $status->name }}</option>
@@ -58,8 +59,10 @@
         </select>
         <x-button type="submit">Salvar alterações</x-button>
 
-        <x-cancel-button>Cancelar</x-cancel-button>
     </form>
+    <a href="/">
+        <x-cancel-button>Cancelar</x-cancel-button>
+    </a>
 
     <form class="relative " method="POST" action="/destroy/{{ $chamado->id }}">
         @csrf
